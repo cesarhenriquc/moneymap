@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Como usar sua planilha no Google Sheets — MoneyMap</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --preto:#1A1A1A;
+  --verde:#2D6A1E;
+  --verde-med:#5DBA6A;
+  --verde-clr:#EAF5E0;
+  --cinza:#F7F6F2;
+  --branco:#FFFFFF;
+  --ouro:#D4AF37;
+  --ouro-clr:#FFF8DC;
+}
+body{font-family:'Space Grotesk',sans-serif;color:var(--preto);background:var(--cinza);min-height:100vh;}
+
+/* HEADER */
+.header{
+  background:var(--preto);
+  padding:20px 24px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.header-logo{display:flex;align-items:center;gap:10px;}
+.header-icon{
+  width:36px;height:36px;background:#222;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+}
+.header-name{
+  font-size:20px;font-weight:700;color:var(--branco);letter-spacing:-.02em;
+}
+.header-name span{color:var(--verde-med);}
+
+/* HERO */
+.hero{
+  background:var(--preto);
+  padding:56px 24px 64px;
+  text-align:center;
+  border-bottom:3px solid var(--verde);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(45,106,30,.2);border:1px solid rgba(93,186,106,.3);
+  color:var(--verde-med);font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 16px;border-radius:99px;margin-bottom:24px;
+}
+.hero h1{
+  font-size:clamp(26px,4vw,48px);font-weight:700;
+  color:var(--branco);letter-spacing:-.03em;line-height:1.1;
+  margin-bottom:14px;
+}
+.hero h1 span{color:var(--verde-med);}
+.hero p{font-size:16px;color:#888;line-height:1.7;max-width:520px;margin:0 auto 36px;}
+
+/* ESCOLHA */
+.escolha{
+  max-width:760px;margin:0 auto;padding:0 24px;
+}
+.opcoes{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-top:-32px;
+}
+@media(max-width:540px){.opcoes{grid-template-columns:1fr;}}
+.opcao{
+  background:var(--branco);border-radius:14px;padding:24px;
+  border:2px solid transparent;cursor:pointer;text-align:center;
+  transition:border-color .2s,transform .15s;
+  text-decoration:none;color:inherit;display:block;
+}
+.opcao:hover{border-color:var(--verde-med);transform:translateY(-2px);}
+.opcao.destaque{border-color:var(--verde);}
+.opcao-icon{font-size:36px;margin-bottom:12px;}
+.opcao-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.opcao-desc{font-size:12px;color:#888;line-height:1.5;}
+.opcao-badge{
+  display:inline-block;margin-top:10px;
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;
+}
+.badge-rec{background:var(--verde-clr);color:var(--verde);}
+.badge-alt{background:#e8e8e8;color:#666;}
+
+/* WRAPPER CONTEÚDO */
+.content{max-width:680px;margin:40px auto;padding:0 24px 80px;}
+
+/* MÉTODO */
+.metodo{
+  background:var(--branco);border-radius:16px;
+  border:1px solid #e5e5e5;overflow:hidden;
+  margin-bottom:16px;
+}
+.metodo-header{
+  padding:20px 24px;
+  display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid #f0f0f0;
+}
+.metodo-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--verde);color:var(--branco);
+  font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.metodo-titulo{font-size:15px;font-weight:700;}
+.metodo-sub{font-size:12px;color:#888;margin-top:2px;}
+
+/* STEPS */
+.steps{padding:20px 24px;display:flex;flex-direction:column;gap:20px;}
+.step{display:flex;gap:16px;align-items:flex-start;}
+.step-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--verde-clr);color:var(--verde);
+  font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.step-body{}
+.step-title{font-size:14px;font-weight:600;margin-bottom:4px;}
+.step-desc{font-size:13px;color:#666;line-height:1.6;}
+
+/* SCREENSHOT MOCKUP */
+.screen{
+  background:#f0f0f0;border-radius:8px;
+  border:1px solid #e0e0e0;overflow:hidden;
+  margin-top:10px;
+}
+.screen-bar{
+  background:#e0e0e0;padding:8px 12px;
+  display:flex;align-items:center;gap:6px;
+}
+.dot{width:10px;height:10px;border-radius:50%;}
+.screen-body{padding:12px 16px;font-size:12px;color:#666;}
+.menu-item{
+  padding:6px 10px;border-radius:5px;
+  font-size:12px;font-weight:500;margin-bottom:3px;
+  display:flex;align-items:center;gap:8px;
+}
+.menu-item.ativo{background:var(--verde-clr);color:var(--verde);font-weight:700;}
+.url-bar{
+  background:var(--branco);border:1px solid #ddd;border-radius:5px;
+  padding:6px 10px;font-size:11px;color:#888;
+  font-family:monospace;flex:1;
+}
+
+/* BTN DIRETO */
+.btn-sheets{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--verde);color:var(--branco);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:15px;font-weight:700;
+  padding:18px 32px;border-radius:10px;
+  text-decoration:none;margin:20px 24px;
+  transition:background .2s;border:none;cursor:pointer;
+  width:calc(100% - 48px);
+}
+.btn-sheets:hover{background:#3a8a28;}
+
+/* TIP */
+.tip{
+  background:var(--ouro-clr);border:1px solid #e8d080;
+  border-radius:10px;padding:14px 16px;
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:13px;color:#6b5010;line-height:1.6;
+}
+.tip-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+
+/* SEPARADOR */
+.sep{
+  text-align:center;font-size:12px;font-weight:600;
+  color:#aaa;letter-spacing:.1em;text-transform:uppercase;
+  margin:24px 0;display:flex;align-items:center;gap:12px;
+}
+.sep::before,.sep::after{content:'';flex:1;height:1px;background:#e0e0e0;}
+
+/* SUPORTE */
+.suporte{
+  background:var(--preto);border-radius:14px;padding:28px 24px;
+  text-align:center;margin-top:32px;
+}
+.suporte h3{font-size:16px;font-weight:700;color:var(--branco);margin-bottom:8px;}
+.suporte p{font-size:13px;color:#888;line-height:1.6;margin-bottom:16px;}
+.suporte a{
+  color:var(--verde-med);font-weight:600;text-decoration:none;
+}
+.suporte a:hover{text-decoration:underline;}
+
+/* FOOTER */
+footer{text-align:center;padding:24px;font-size:11px;color:#aaa;}
+footer span{color:var(--verde-med);}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <div class="header-icon">
+      <svg width="20" height="20" viewBox="0 0 30 30" fill="none">
+        <polyline points="4,22 10,14 16,18 26,7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26" cy="7" r="3.5" fill="#2D6A1E"/>
+        <line x1="4" y1="25" x2="26" y2="25" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="header-name"><span>Money</span>Map</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">✅ Compra confirmada!</div>
+  <h1>Vamos abrir sua planilha<br><span>no Google Sheets</span></h1>
+  <p>Você tem duas opções: acessar direto pela nossa cópia compartilhada (mais rápido) ou importar o arquivo .xlsx que você baixou.</p>
+</div>
+
+<!-- OPÇÕES -->
+<div class="escolha">
+  <div class="opcoes">
+    <a href="https://docs.google.com/spreadsheets/d/1jo_z6jiGA1QfE_1Skv_lA8nIpBma3FpFMgA4cxeRQGI/copy" class="opcao destaque">
+      <div class="opcao-icon">⚡</div>
+      <div class="opcao-title">Abrir no Google Sheets</div>
+      <div class="opcao-desc">Clique e a planilha já abre pronta na sua conta Google. Mais rápido.</div>
+      <div class="opcao-badge badge-rec">Recomendado</div>
+    </a>
+    <div class="opcao" onclick="document.getElementById('metodo-xlsx').scrollIntoView({behavior:'smooth'})">
+      <div class="opcao-icon">📁</div>
+      <div class="opcao-title">Já baixei o arquivo .xlsx</div>
+      <div class="opcao-desc">Quero importar o arquivo que baixei no meu Google Drive.</div>
+      <div class="opcao-badge badge-alt">Passo a passo abaixo</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="content">
+
+  <!-- MÉTODO 1: Link direto -->
+  <div class="metodo">
+    <div class="metodo-header">
+      <div class="metodo-num">1</div>
+      <div>
+        <div class="metodo-titulo">Usar o link direto ⚡</div>
+        <div class="metodo-sub">Mais rápido — 1 clique e já está na sua conta</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Clique no botão "Abrir no Google Sheets"</div>
+          <div class="step-desc">O Google vai perguntar se você quer fazer uma cópia da planilha na sua conta. Clique em <strong>"Fazer uma cópia"</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Escolha onde salvar (opcional)</div>
+          <div class="step-desc">Você pode escolher a pasta no Drive ou deixar na raiz. Renomeie se quiser — sugerimos "MoneyMap — Meu Controle Financeiro".</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Pronto! Comece pela aba ⚙️ Config</div>
+          <div class="step-desc">Preencha seu nome, renda e limites por categoria. Depois é só lançar os gastos na aba 📝 Lançamentos.</div>
+          <div class="tip" style="margin-top:10px;">
+            <span class="tip-icon">💡</span>
+            A planilha é <strong>sua</strong> — a cópia fica no seu Drive e ninguém mais tem acesso. Você pode editar à vontade.
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="https://docs.google.com/spreadsheets/d/1jo_z6jiGA1QfE_1Skv_lA8nIpBma3FpFMgA4cxeRQGI/copy" class="btn-sheets">
+      ⚡ Abrir no Google Sheets agora
+    </a>
+  </div>
+
+  <div class="sep">ou se baixou o arquivo</div>
+
+  <!-- MÉTODO 2: Importar XLSX -->
+  <div class="metodo" id="metodo-xlsx">
+    <div class="metodo-header">
+      <div class="metodo-num">2</div>
+      <div>
+        <div class="metodo-titulo">Importar o arquivo .xlsx 📁</div>
+        <div class="metodo-sub">Para quem já baixou a planilha no computador</div>
+      </div>
+    </div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Abra o Google Drive</div>
+          <div class="step-desc">Acesse <strong>drive.google.com</strong> no navegador. Faça login com sua conta Google se precisar.</div>
+          <div class="screen" style="margin-top:10px;">
+            <div class="screen-bar">
+              <div class="dot" style="background:#ff5f57;"></div>
+              <div class="dot" style="background:#febc2e;"></div>
+              <div class="dot" style="background:#28c840;"></div>
+              <div class="url-bar">drive.google.com</div>
+            </div>
+            <div class="screen-body" style="color:#2D6A1E;font-weight:600;">📂 Meu Drive</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Arraste o arquivo para o Drive</div>
+          <div class="step-desc">Pegue o arquivo <strong>MoneyMap_Planilha_Financeira.xlsx</strong> que está na sua pasta de Downloads e arraste para a janela do Drive. Ou clique em <strong>"+ Novo" → "Upload de arquivo"</strong>.</div>
+          <div class="screen" style="margin-top:10px;">
+            <div class="screen-bar">
+              <div class="dot" style="background:#ff5f57;"></div>
+              <div class="dot" style="background:#febc2e;"></div>
+              <div class="dot" style="background:#28c840;"></div>
+            </div>
+            <div class="screen-body">
+              <div class="menu-item ativo">➕ Novo</div>
+              <div style="padding-left:16px;">
+                <div class="menu-item">📄 Novo documento</div>
+                <div class="menu-item" style="background:#f5f5f5;color:var(--verde);font-weight:600;">📁 Upload de arquivo ←</div>
+                <div class="menu-item">📂 Upload de pasta</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Abra o arquivo no Google Sheets</div>
+          <div class="step-desc">Depois que o upload terminar, clique duas vezes no arquivo no Drive. Ele vai abrir em modo de visualização. Clique em <strong>"Abrir com Google Planilhas"</strong> no topo.</div>
+          <div class="screen" style="margin-top:10px;">
+            <div class="screen-bar">
+              <div class="dot" style="background:#ff5f57;"></div>
+              <div class="dot" style="background:#febc2e;"></div>
+              <div class="dot" style="background:#28c840;"></div>
+            </div>
+            <div class="screen-body">
+              <div style="background:var(--verde);color:white;padding:7px 14px;border-radius:5px;font-size:12px;font-weight:600;display:inline-block;">
+                📊 Abrir com Google Planilhas
+              </div>
+              <div style="margin-top:8px;font-size:11px;color:#aaa;">MoneyMap_Planilha_Financeira.xlsx</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Salve como Google Sheets (recomendado)</div>
+          <div class="step-desc">Para usar todos os recursos do Sheets, vá em <strong>Arquivo → Salvar como Google Planilhas</strong>. Isso cria uma cópia nativa no seu Drive.</div>
+          <div class="screen" style="margin-top:10px;">
+            <div class="screen-bar">
+              <div class="dot" style="background:#ff5f57;"></div>
+              <div class="dot" style="background:#febc2e;"></div>
+              <div class="dot" style="background:#28c840;"></div>
+            </div>
+            <div class="screen-body">
+              <div class="menu-item ativo">Arquivo</div>
+              <div style="padding-left:16px;">
+                <div class="menu-item">💾 Salvar</div>
+                <div class="menu-item" style="background:var(--verde-clr);color:var(--verde);font-weight:700;">📊 Salvar como Google Planilhas ←</div>
+                <div class="menu-item">⬇️ Fazer download</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip" style="margin-top:12px;">
+            <span class="tip-icon">💡</span>
+            Depois disso, você pode acessar pelo celular pelo app Google Sheets — tudo sincronizado automaticamente.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Comece pela aba ⚙️ Config</div>
+          <div class="step-desc">Preencha sua renda mensal e os limites por categoria. É a única configuração que você precisa fazer — a planilha cuida do resto.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUPORTE -->
+  <div class="suporte">
+    <h3>Ficou com dúvida?</h3>
+    <p>Estamos aqui para ajudar. Manda uma mensagem e te respondemos em até 24 horas.</p>
+    <a href="mailto:contato@moneymap.com.br">📧 contato@moneymap.com.br</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 <span>MoneyMap</span> · Obrigado pela sua compra 🎉</p>
+</footer>
+
+</body>
+</html>

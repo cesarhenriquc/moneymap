@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Planilha de Controle Financeiro Pessoal MoneyMap — 8 abas completas, dashboard automático, controle de cartão, metas e dívidas. R$ 37 pagamento único."/>
+<meta property="og:title" content="Planilha de Controle Financeiro Pessoal — MoneyMap"/>
+<meta property="og:description" content="Pare de perguntar para onde foi seu dinheiro. Planilha completa com dashboard, alertas e simulador de dívidas."/>
+<meta property="og:type" content="website"/>
+<title>Planilha de Controle Financeiro Pessoal — MoneyMap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --preto:#1A1A1A;
+  --verde:#2D6A1E;
+  --verde-med:#5DBA6A;
+  --verde-clr:#EAF5E0;
+  --cinza:#F7F6F2;
+  --ouro-clr:#FFF8DC;
+  --vermelho:#C0392B;
+  --branco:#FFFFFF;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;color:var(--preto);background:var(--branco);overflow-x:hidden;}
+
+/* HERO */
+.hero{
+  background:var(--preto);
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:80px 24px 60px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(45,106,30,0.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(45,106,30,0.07) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+.z{position:relative;z-index:1;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(45,106,30,0.18);
+  border:1px solid rgba(93,186,106,0.35);
+  color:var(--verde-med);
+  font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:7px 18px;border-radius:99px;margin-bottom:32px;
+}
+.hero-brand{
+  font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--verde-med);margin-bottom:12px;
+}
+.hero h1{
+  font-size:clamp(32px,6vw,76px);
+  font-weight:700;color:var(--branco);
+  letter-spacing:-.03em;line-height:1.05;
+  max-width:880px;margin:0 auto 16px;
+}
+.hero h1 span{color:var(--verde-med);}
+.hero-sub{
+  font-size:clamp(15px,2vw,20px);font-weight:400;
+  color:#aaa;max-width:600px;margin:0 auto 40px;
+  line-height:1.7;
+}
+.hero-price-block{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  margin-bottom:28px;
+}
+.price-from{font-size:14px;color:#555;text-decoration:line-through;}
+.price-main{
+  font-size:72px;font-weight:700;color:var(--branco);letter-spacing:-.04em;line-height:1;
+}
+.price-main small{font-size:26px;font-weight:500;color:#888;vertical-align:super;margin-right:4px;}
+.price-note{font-size:13px;color:var(--verde-med);font-weight:500;margin-top:2px;}
+.btn-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--verde);color:var(--branco);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:17px;font-weight:700;letter-spacing:.02em;
+  padding:20px 48px;border-radius:8px;border:none;cursor:pointer;
+  text-decoration:none;transition:background .2s,transform .2s;
+}
+.btn-cta:hover{background:#3a8a28;transform:translateY(-2px);}
+.btn-cta:active{transform:translateY(0);}
+.hero-trust{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;
+  margin-top:40px;
+}
+.trust-item{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:500;color:#555;
+}
+.trust-dot{width:5px;height:5px;background:var(--verde);border-radius:50%;flex-shrink:0;}
+
+/* SEÇÕES GERAIS */
+.sec-tag{
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--verde);margin-bottom:14px;display:block;
+}
+.sec-h2{
+  font-size:clamp(26px,4vw,48px);font-weight:700;
+  letter-spacing:-.03em;line-height:1.1;margin-bottom:16px;
+}
+.sec-lead{
+  font-size:17px;color:#555;line-height:1.7;max-width:600px;
+}
+
+/* PROBLEMA */
+.problema{padding:96px 24px;}
+.problema-inner{max-width:1100px;margin:0 auto;}
+.pain-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;margin-top:48px;
+}
+.pain-card{
+  background:var(--cinza);border-radius:12px;padding:24px;
+  border-left:4px solid var(--vermelho);border-radius:0 12px 12px 0;
+}
+.pain-card .icon{font-size:26px;margin-bottom:10px;}
+.pain-card h4{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--preto);}
+.pain-card p{font-size:13px;color:#666;line-height:1.6;}
+
+/* SOLUÇÃO */
+.solucao{background:var(--preto);padding:96px 24px;}
+.solucao-inner{max-width:1100px;margin:0 auto;}
+.solucao .sec-tag{color:var(--verde-med);}
+.solucao .sec-h2{color:var(--branco);}
+.solucao .sec-h2 span{color:var(--verde-med);}
+.solucao .sec-lead{color:#777;margin-top:12px;}
+.feat-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;margin-top:48px;
+}
+.feat{
+  background:#222;border-radius:12px;padding:22px;
+  border:1px solid #2d2d2d;transition:border-color .2s;
+}
+.feat:hover{border-color:var(--verde);}
+.feat-icon{font-size:28px;margin-bottom:12px;}
+.feat h4{font-size:14px;font-weight:700;color:var(--branco);margin-bottom:7px;}
+.feat p{font-size:13px;color:#777;line-height:1.6;}
+
+/* ABAS */
+.abas{padding:96px 24px;background:var(--cinza);}
+.abas-inner{max-width:900px;margin:0 auto;}
+.abas-list{margin-top:40px;display:flex;flex-direction:column;gap:4px;}
+.aba-item{
+  display:flex;align-items:stretch;
+  background:var(--branco);border-radius:10px;overflow:hidden;
+  border:1px solid #e5e5e5;
+}
+.aba-num{
+  width:44px;min-width:44px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--branco);
+}
+.aba-body{padding:16px 18px;}
+.aba-name{font-size:14px;font-weight:700;margin-bottom:3px;color:var(--preto);}
+.aba-desc{font-size:12px;color:#666;line-height:1.5;}
+.aba-badge{
+  display:inline-block;font-size:9px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;margin-left:7px;vertical-align:middle;
+}
+.b-auto{background:#EAF5E0;color:#2D6A1E;}
+.b-input{background:#FFF8DC;color:#7a5f00;}
+.b-dash{background:#EBEBEB;color:#555;}
+
+/* PARA QUEM */
+.forquem{padding:96px 24px;background:var(--branco);}
+.forquem-inner{max-width:1100px;margin:0 auto;}
+.forquem-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;margin-top:48px;
+}
+.fq-card{
+  border-radius:12px;padding:26px 22px;
+  border:1px solid #e5e5e5;text-align:center;
+  transition:border-color .2s;
+}
+.fq-card:hover{border-color:var(--verde-med);}
+.fq-icon{font-size:36px;margin-bottom:12px;}
+.fq-card h4{font-size:14px;font-weight:700;margin-bottom:7px;color:var(--preto);}
+.fq-card p{font-size:13px;color:#666;line-height:1.5;}
+
+/* GARANTIA */
+.garantia{background:var(--verde);padding:72px 24px;text-align:center;}
+.garantia-inner{max-width:640px;margin:0 auto;}
+.garantia-icon{font-size:56px;margin-bottom:20px;}
+.garantia h2{
+  font-size:clamp(22px,4vw,38px);font-weight:700;
+  color:var(--branco);letter-spacing:-.02em;margin-bottom:14px;
+}
+.garantia p{font-size:16px;color:rgba(255,255,255,.85);line-height:1.7;}
+
+/* FAQ */
+.faq{padding:96px 24px;background:var(--cinza);}
+.faq-inner{max-width:720px;margin:0 auto;}
+.faq-item{
+  background:var(--branco);border-radius:10px;
+  border:1px solid #e5e5e5;margin-bottom:6px;overflow:hidden;
+}
+.faq-q{
+  width:100%;text-align:left;padding:18px 22px;
+  background:none;border:none;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px;font-weight:600;color:var(--preto);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  line-height:1.4;
+}
+.faq-arrow{
+  font-size:20px;color:var(--verde);
+  transition:transform .25s;flex-shrink:0;line-height:1;
+  font-weight:400;
+}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a-inner{padding:0 22px 18px;font-size:13px;color:#555;line-height:1.7;}
+.faq-item.open .faq-a{max-height:200px;}
+.faq-item.open .faq-arrow{transform:rotate(45deg);}
+
+/* CTA FINAL */
+.cta-final{background:var(--preto);padding:112px 24px;text-align:center;}
+.cta-final-inner{max-width:640px;margin:0 auto;}
+.cta-final .sec-tag{color:var(--verde-med);}
+.cta-final .sec-h2{color:var(--branco);margin-bottom:10px;}
+.cta-final .sec-h2 span{color:var(--verde-med);}
+.cta-final .sub{font-size:16px;color:#777;margin-bottom:40px;line-height:1.6;}
+.cta-price{margin-bottom:32px;}
+.cta-price .price-main{font-size:80px;}
+.trust-badges{
+  display:flex;justify-content:center;gap:24px;
+  flex-wrap:wrap;margin-top:20px;
+}
+.tb{font-size:12px;color:#555;font-weight:500;}
+
+/* FOOTER */
+footer{
+  background:#111;padding:36px 24px;
+  text-align:center;border-top:1px solid #222;
+}
+footer p{font-size:12px;color:#444;line-height:1.8;}
+footer a{color:var(--verde-med);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+/* STICKY CTA MOBILE */
+.sticky-cta{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:var(--preto);border-top:1px solid #2a2a2a;
+  padding:12px 20px;
+  flex-direction:row;align-items:center;justify-content:space-between;gap:12px;
+}
+.sticky-price{color:var(--branco);font-weight:700;font-size:18px;line-height:1.2;}
+.sticky-price small{font-size:11px;color:#888;font-weight:400;display:block;}
+.sticky-btn{
+  background:var(--verde);color:var(--branco);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px;font-weight:700;
+  padding:13px 24px;border-radius:7px;border:none;cursor:pointer;
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+}
+
+/* RESPONSIVO */
+@media(max-width:640px){
+  .sticky-cta{display:flex;}
+  .hero{padding-bottom:96px;}
+  .pain-card{border-radius:0 10px 10px 0;}
+  .btn-cta{font-size:15px;padding:17px 32px;}
+}
+@media(max-width:480px){
+  .price-main{font-size:56px;}
+  .cta-price .price-main{font-size:64px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="z">
+    <div class="hero-badge">🗺️ MoneyMap &middot; Lançamento</div>
+    <div class="hero-brand">Planilha de Controle Financeiro Pessoal</div>
+    <h1>Pare de perguntar<br><span>&ldquo;para onde foi meu dinheiro?&rdquo;</span></h1>
+    <p class="hero-sub">A planilha completa que organiza suas finanças, controla seus gastos por categoria e te mostra exatamente o que fazer para começar a investir &mdash; sem complicação.</p>
+
+    <div class="hero-price-block">
+      <div class="price-from">De R$&nbsp;67</div>
+      <div class="price-main"><small>R$</small>37</div>
+      <div class="price-note">🔥 Oferta de lançamento &middot; por tempo limitado</div>
+    </div>
+
+    <a href="#comprar" class="btn-cta">Quero minha planilha agora &rarr;</a>
+
+    <div class="hero-trust">
+      <div class="trust-item"><div class="trust-dot"></div>Download imediato</div>
+      <div class="trust-item"><div class="trust-dot"></div>Google Sheets e Excel</div>
+      <div class="trust-item"><div class="trust-dot"></div>Garantia de 7 dias</div>
+      <div class="trust-item"><div class="trust-dot"></div>Sem mensalidade</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema" id="problema">
+  <div class="problema-inner">
+    <span class="sec-tag">Você se identifica?</span>
+    <h2 class="sec-h2">Parece que o dinheiro some<br>antes do fim do mês?</h2>
+    <p class="sec-lead">Você não está sozinho. A maioria nunca aprendeu a controlar dinheiro de verdade &mdash; e paga um preço alto por isso todo mês.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="icon">😰</div>
+        <h4>&ldquo;Não sei para onde vai meu salário&rdquo;</h4>
+        <p>Trabalha o mês inteiro, mas no dia 20 já está no limite sem entender o porquê.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">📱</div>
+        <h4>Já tentou apps que não funcionaram</h4>
+        <p>Baixou 3 aplicativos, usou 2 semanas e abandonou. Complicado demais, chato demais.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">💳</div>
+        <h4>A fatura do cartão sempre surpreende</h4>
+        <p>No fechamento aparece um valor inesperado &mdash; e o saldo vai embora de uma vez.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">📉</div>
+        <h4>Investe zero todo mês</h4>
+        <p>Quer começar a investir, mas nunca sobra nada. A conta começa zerada todo dia 1&ordm;.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section class="solucao" id="funcionalidades">
+  <div class="solucao-inner">
+    <span class="sec-tag">A solução</span>
+    <h2 class="sec-h2">Tudo que você precisa para<br><span>mapear sua vida financeira</span></h2>
+    <p class="sec-lead">Uma planilha completa, visual e simples. Você só precisa lançar os gastos &mdash; ela faz o resto automaticamente.</p>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-icon">📊</div>
+        <h4>Dashboard visual completo</h4>
+        <p>Sua situação financeira inteira em uma tela: receitas, gastos, saldo e progresso das metas.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔔</div>
+        <h4>Alertas de limite por categoria</h4>
+        <p>Cada categoria tem um limite definido por você. A planilha avisa quando está chegando no limite &mdash; antes de estourar.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">💳</div>
+        <h4>Controle de cartão de crédito</h4>
+        <p>Nunca mais ser surpreendido pela fatura. Controle de parcelamentos, limite disponível e vencimento.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">❄️</div>
+        <h4>Simulador de quitação de dívidas</h4>
+        <p>Método bola de neve e avalanche prontos. Veja em quantos meses você quita cada dívida.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🎯</div>
+        <h4>Metas com barra de progresso</h4>
+        <p>Defina objetivos (reserva de emergência, viagem, investimento) e acompanhe o progresso mês a mês.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📅</div>
+        <h4>Relatório anual de evolução</h4>
+        <p>Histórico completo: quanto ganhou, gastou, poupou e como seu patrimônio evoluiu no ano.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABAS -->
+<section class="abas" id="abas">
+  <div class="abas-inner">
+    <span class="sec-tag">O que está incluso</span>
+    <h2 class="sec-h2">8 abas completas,<br>prontas para usar</h2>
+    <div class="abas-list">
+      <div class="aba-item">
+        <div class="aba-num" style="background:#1A1A1A;">1</div>
+        <div class="aba-body">
+          <div class="aba-name">🏠 Início <span class="aba-badge b-dash">Dashboard</span></div>
+          <div class="aba-desc">Visão geral do mês em uma tela &mdash; saldo, % gasto por categoria e alertas. A aba que você abre todo dia.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#2D3A28;">2</div>
+        <div class="aba-body">
+          <div class="aba-name">⚙️ Configuração <span class="aba-badge b-input">Entrada</span></div>
+          <div class="aba-desc">Preencha sua renda, metas e limites por categoria. Feito uma vez só &mdash; a planilha usa essas informações para sempre.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#2D6A1E;">3</div>
+        <div class="aba-body">
+          <div class="aba-name">📝 Lançamentos <span class="aba-badge b-input">Entrada</span></div>
+          <div class="aba-desc">Registre receitas e despesas. Data, descrição, categoria e valor &mdash; menos de 2 minutos por dia.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#3a7a30;">4</div>
+        <div class="aba-body">
+          <div class="aba-name">📊 Orçamento Mensal <span class="aba-badge b-auto">Automático</span></div>
+          <div class="aba-desc">Planejado vs. realizado por categoria com semáforo de gastos 🟢🟡🔴. Tudo calculado automaticamente.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#4a8a40;">5</div>
+        <div class="aba-body">
+          <div class="aba-name">💳 Cartão de Crédito <span class="aba-badge b-auto">Automático</span></div>
+          <div class="aba-desc">Fatura, limite disponível, parcelas em aberto e data de vencimento calculados automaticamente.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#5a9a50;">6</div>
+        <div class="aba-body">
+          <div class="aba-name">🎯 Dívidas e Metas <span class="aba-badge b-auto">Automático</span></div>
+          <div class="aba-desc">Simulador bola de neve e avalanche + barra de progresso de metas financeiras.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#888;">7</div>
+        <div class="aba-body">
+          <div class="aba-name">📅 Relatório Anual <span class="aba-badge b-auto">Automático</span></div>
+          <div class="aba-desc">Evolução patrimonial mês a mês e comparativo de gastos ao longo do ano.</div>
+        </div>
+      </div>
+      <div class="aba-item">
+        <div class="aba-num" style="background:#555;">8</div>
+        <div class="aba-body">
+          <div class="aba-name">📖 Guia de Uso <span class="aba-badge b-dash">Suporte</span></div>
+          <div class="aba-desc">Tutorial passo a passo com exemplos prontos. Você não vai travar em nenhuma etapa.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="forquem" id="para-quem">
+  <div class="forquem-inner">
+    <span class="sec-tag">Para quem é</span>
+    <h2 class="sec-h2">Feita para quem quer<br>resultado, não complicação</h2>
+    <div class="forquem-grid">
+      <div class="fq-card">
+        <div class="fq-icon">👔</div>
+        <h4>Assalariado CLT</h4>
+        <p>Que quer finalmente saber o que acontece com o salário antes do próximo cair.</p>
+      </div>
+      <div class="fq-card">
+        <div class="fq-icon">💻</div>
+        <h4>Freelancer / Autônomo</h4>
+        <p>Com renda variável que precisa controlar ainda mais para não ficar no sufoco.</p>
+      </div>
+      <div class="fq-card">
+        <div class="fq-icon">📈</div>
+        <h4>Quem quer começar a investir</h4>
+        <p>Que sabe que precisa organizar primeiro para sobrar algo para aplicar.</p>
+      </div>
+      <div class="fq-card">
+        <div class="fq-icon">💰</div>
+        <h4>Quem tem dívidas</h4>
+        <p>Que quer um plano concreto para quitar, com data e estratégia definidas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="garantia">
+  <div class="garantia-inner">
+    <div class="garantia-icon">🛡️</div>
+    <h2>Garantia incondicional de 7 dias</h2>
+    <p>Se por qualquer motivo a planilha não for o que você esperava, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia. O risco é todo nosso.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <span class="sec-tag" style="text-align:center;display:block;">Dúvidas</span>
+    <h2 class="sec-h2" style="text-align:center;margin-bottom:32px;">Perguntas frequentes</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Preciso saber usar Excel para usar a planilha?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Não! A planilha foi feita para quem não é expert. Você só preenche os campos destacados &mdash; as fórmulas e cálculos são todos automáticos. O Guia de Uso (aba 8) explica cada etapa com exemplos práticos.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Funciona no Google Sheets ou só no Excel?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Funciona nos dois! Você pode usar no Google Sheets (gratuito, pelo navegador) ou no Microsoft Excel. Basta fazer o upload do arquivo no Google Drive e abrir com o Sheets.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Como recebo a planilha após a compra?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">O download é imediato após a confirmação do pagamento. Você recebe um e-mail com o link para baixar o arquivo .xlsx direto no seu dispositivo.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Posso usar em mais de um dispositivo?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Sim! A licença é pessoal e você pode usar no celular, tablet e computador. Recomendamos o Google Sheets para acessar de qualquer lugar sem instalar nada.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        O preço de R$&nbsp;37 é uma assinatura mensal?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Não! É pagamento único. Você paga uma vez e usa para sempre &mdash; sem mensalidade, sem renovação, sem surpresa no cartão.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        E se eu não gostar?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Sem problema. Você tem 7 dias de garantia total. Se não ficar satisfeito por qualquer motivo, devolvemos 100% do valor pago. É só entrar em contato pelo contato@moneymap.com.br.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="comprar">
+  <div class="cta-final-inner">
+    <span class="sec-tag">Oferta de lançamento</span>
+    <h2 class="sec-h2">Comece hoje a<br><span>mapear seu dinheiro</span></h2>
+    <p class="sub">Pagamento único. Download imediato. Sem mensalidade.</p>
+    <div class="cta-price">
+      <div class="price-from" style="color:#555;">De R$&nbsp;67</div>
+      <div class="price-main"><small>R$</small>37</div>
+      <div class="price-note" style="margin-top:4px;">🔥 Preço de lançamento &mdash; por tempo limitado</div>
+    </div>
+    <a href="#" class="btn-cta" style="font-size:18px;padding:22px 52px;">
+      Quero a Planilha MoneyMap &rarr;
+    </a>
+    <div class="trust-badges">
+      <span class="tb">🛡️ Garantia 7 dias</span>
+      <span class="tb">⚡ Download imediato</span>
+      <span class="tb">🔒 Pagamento seguro</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    &copy; 2025 <strong style="color:#5DBA6A;">MoneyMap</strong> &middot; Todos os direitos reservados<br>
+    <a href="mailto:contato@moneymap.com.br">contato@moneymap.com.br</a> &middot;
+    Produto digital &middot; Entrega imediata
+  </p>
+</footer>
+
+<!-- STICKY CTA MOBILE -->
+<div class="sticky-cta">
+  <div class="sticky-price">
+    <small>Oferta de lançamento</small>
+    R$&nbsp;37
+  </div>
+  <a href="#comprar" class="sticky-btn">Comprar agora &rarr;</a>
+</div>
+
+<script>
+function toggleFaq(btn){
+  const item=btn.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:0.08});
+
+document.querySelectorAll('.pain-card,.feat,.aba-item,.fq-card,.faq-item').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(18px)';
+  el.style.transition='opacity .45s ease,transform .45s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
